@@ -9,6 +9,8 @@
     "node": "12.x"
   },
   "dependencies": {
-    "discord.js": "^12.5.1"
+    "discord.js": "^12.5.1",
+    "fs": "0.0.1-security",
+    "mysql": "^2.18.1"
   }
 }
