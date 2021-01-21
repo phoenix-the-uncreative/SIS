@@ -1,0 +1,14 @@
+{
+  "name": "SheolInfSys",
+  "version": "0.0.1",
+  "description": "A Discord bot. Does stuff. Sometimes.",
+  "main": "bot.js",
+  "author": "phoenix#8326",
+  "license": "ISC",
+  "engines": {
+    "node": "12.x"
+  },
+  "dependencies": {
+    "discord.js": "^12.5.1"
+  }
+}
