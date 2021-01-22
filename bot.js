@@ -1,4 +1,4 @@
-﻿const Discord = require('discord.js');
+const Discord = require('discord.js');
 const mysql = require('mysql');
 const fs = require('fs');
 const bot = new Discord.Client();
@@ -30,11 +30,10 @@ bot.on('message', msg => {
 	if (msg.author.id == bot.user.id) return;
 	
 	connection.connect(() => {
-		connection.query("SELECT * FROM `" + config.table + "` WHERE `" + config.column + "` = " + msg
-			.author.id, (err, result, fields) => {
+		connection.query("SELECT * FROM `" + config.table + "` WHERE `" + config.column + "` = " + msg.author.id + " and `" + config.column_ban + "` = 0", (err, result, fields) => {
 				if (result.length == 0) {
 					msg.channel.send(
-						"За вашим аккаунтом Discord не закреплено ни одного персонажа Морганы. Публиковать анонимные объявления без персонажей запрещено в целях безопасности."
+						"За вашим аккаунтом Discord не закреплено ни одного персонажа Морганы или все ваши персонажи забанены. Публиковать анонимные объявления без персонажей запрещено в целях безопасности."
 					);
 				} else if (msg.channel.type == "dm") {
 					if (anonCooldowned[msg.channel.id] == (false || undefined)) {
