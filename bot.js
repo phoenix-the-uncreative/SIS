@@ -30,25 +30,25 @@ bot.on('message', msg => {
           "За вашим аккаунтом Discord не закреплено ни одного персонажа Морганы или все ваши персонажи забанены. Публиковать анонимные объявления без персонажей запрещено в целях безопасности."
         );
       } else if (msg.channel.type == "dm") {
-        if (anonCooldowned[msg.channel.id] == (false || undefined)) {
+        if (anonCooldowned[msg.author.id] == (false || undefined)) {
           if (text == "анон старт") {
             msg.channel.send(
               "**ШИС: Отправка анонимных сообщений**\nВведите название канала, куда это сообщение будет отправлено (например: \"куплю\", \"разные-объявления\"):"
             );
             
-            anonSend[msg.channel.id] = 1;
-          } else if (anonSend[msg.channel.id] == 1) {
+            anonSend[msg.author.id] = 1;
+          } else if (anonSend[msg.author.id] == 1) {
 			if ((sisChannels.find(channel => channel.name === msg.content) != undefined) 
 			&& (sisChannels.find(channel => channel.name === msg.content).parentID == "801502233845563462")) {
-              anonChannel[msg.channel.id] = sisChannels.find(channel => channel.name === msg.content).id;
-              anonSend[msg.channel.id] = 2;
+              anonChannel[msg.author.id] = sisChannels.find(channel => channel.name === msg.content).id;
+              anonSend[msg.author.id] = 2;
               
               msg.channel.send(
                 `Канал #${msg.content} успешно выбран. Введите сообщение, которое будет туда анонимно отправлено:`
               );
             } else msg.channel.send("Канал не найден или не находится в категории объявлений. Попробуйте снова.");
-          } else if (anonSend[msg.channel.id] == 2) {
-            sisChannels.get(anonChannel[msg.channel.id])
+          } else if (anonSend[msg.author.id] == 2) {
+            sisChannels.get(anonChannel[msg.author.id])
               .send(`**Анонимное объявление:**${msg.content}`);
             sisChannels.get("801787710410588170")
               .send(
@@ -60,9 +60,9 @@ bot.on('message', msg => {
 				`Сообщение принято и отправлено. Следующее анонимное сообщение может быть отправлено только через час.
 				\nСпасибо за использование услуги анонимной отправки сообщений.`
               );
-            anonCooldowned[msg.channel.id] = true;
-            anonSend[msg.channel.id] = 0;
-            setTimeout(() => anonCooldowned[msg.channel.id] = false, 3600000);
+            anonCooldowned[msg.author.id] = true;
+            anonSend[msg.author.id] = 0;
+            setTimeout(() => anonCooldowned[msg.author.id] = false, 3600000);
           } else msg.channel.send(
             "Я реагирую только на команду \"анон старт\", а на другие темы разговаривать не умею. Пока.");
         } else msg.channel.send(
